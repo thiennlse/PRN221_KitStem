@@ -6,10 +6,8 @@ using System.Text.Json.Serialization;
 
 namespace BusinessObject.Models
 {
-    public partial class CartItem
-    {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+    public partial class CartItem :BaseEntity
+    {   
         [Required]
         public int? UserId { get; set; }
         [Required]

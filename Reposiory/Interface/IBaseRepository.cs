@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,17 +7,21 @@ using System.Threading.Tasks;
 
 namespace Reposiory.Interface
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IBaseRepository<T> where T : BaseEntity
     {
-        Task<List<T>> getAll();
+        Task<List<T>> GetAll();
 
-        Task<T> getById(int id);
+        Task<T> GetById(int id);
 
-        Task add(T entity);
+        void Add (T entity);
 
-        Task<T> update(T entity);
+        void Remove (T entity);
 
-        Task deleteById(int id);
+        void Update (T entity);
+
+        IQueryable<T> GetQueryable(CancellationToken cancellationToken = default);
+
+        void CheckCancellationToken(CancellationToken cancellationToken = default);
 
     }
 }

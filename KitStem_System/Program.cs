@@ -1,8 +1,15 @@
+using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
+using Service.UnitOfWork;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+builder.Services.AddDbContext<KitStemDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("KitStemDB")));
+builder.Services.AddScoped<UnitOfWork>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

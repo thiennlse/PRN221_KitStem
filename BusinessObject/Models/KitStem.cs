@@ -6,11 +6,8 @@ using System.Text.Json.Serialization;
 
 namespace BusinessObject.Models
 {
-    public partial class KitStem
+    public partial class KitStem : BaseEntity
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        
         public string? Attribute { get; set; }
         [Required]
         public int? Status { get; set; }
