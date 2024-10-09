@@ -1,6 +1,9 @@
 using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
-using Service.UnitOfWork;
+using Reposiory;
+using Reposiory.Interface;
+using Service;
+using Service.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 builder.Services.AddDbContext<KitStemDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("KitStemDB")));
-builder.Services.AddScoped<UnitOfWork>();
+    options.UseSqlServer(builder.Configuration.GetConnectionString("local")));
+builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

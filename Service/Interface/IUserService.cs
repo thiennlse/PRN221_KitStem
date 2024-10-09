@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reposiory.Interface
+namespace Service.Interface
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IUserService
     {
         Task<User> Login(string username, string password);
 

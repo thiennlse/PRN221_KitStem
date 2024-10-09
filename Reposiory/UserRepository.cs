@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using BusinessObject.RequestModel;
 using Microsoft.EntityFrameworkCore;
 using Reposiory.Interface;
 using System;
@@ -9,46 +10,31 @@ using System.Threading.Tasks;
 
 namespace Reposiory
 {
-    public class UserRepository : BaseRepository<User> ,IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        private readonly KitStemDBContext _dBContext;
-        private readonly BaseRepository<User> _baseRepository;
+        private readonly KitStemDBContext _context;
+        private UserRepository instance;
 
         public UserRepository(KitStemDBContext dbContext) : base(dbContext)
         {
-            _dBContext = dbContext;
-            _baseRepository = new BaseRepository<User>(_dBContext);
-        }
-
-        public async Task add(User entity)
-        {
-             await _baseRepository.add(entity);
-        }
-
-        public async Task deleteById(int id)
-        {
-            await _baseRepository.deleteById(id);
-        }
-
-        public async Task<List<User>> getAll()
-        {
-            return await _baseRepository.getAll();  
-        }
-
-        public async Task<User> getById(int id)
-        {
-            return await _baseRepository.getById(id);
+            _context = dbContext;
         }
 
         public async Task<User> Login(string username, string password)
         {
-            return await _dBContext.Users.
-                FirstOrDefaultAsync(u => u.Username.Equals(username) && u.Password.Equals(password));
+            return await _context.Users
+                .FirstOrDefaultAsync( u => u.Username == username && u.Password == password);
         }
 
-        public async Task<User> update(User entity)
+        public async Task Register(UserRequest user)
         {
-            return await _baseRepository.update(entity);
+            User _user = new User
+            {
+                Username = user.Username,
+                Password = user.Password,
+            };
+            _context.Users.Add(_user);
+            await _context.SaveChangesAsync();
         }
     }
 }

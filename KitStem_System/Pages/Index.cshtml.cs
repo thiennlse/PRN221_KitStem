@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Service.UnitOfWork;
+using Service.Interface;
 
 namespace KitStem_System.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUserService _service;
 
-        public IndexModel(UnitOfWork unitOfWork)
+        public IndexModel(IUserService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
         [BindProperty]
         public string txtUsername { get; set; } = default!;
@@ -21,7 +21,7 @@ namespace KitStem_System.Pages
         {
             if(txtPassword != null && txtUsername != null)
             {
-                await _unitOfWork.userRepository.Login(txtUsername, txtPassword);
+                await _service.Login(txtUsername, txtPassword);
                 Response.Redirect("/Privacy");
             }
 
