@@ -13,5 +13,13 @@ namespace Service.Interface
         Task<User> Login(string username, string password);
 
         Task Register(UserRequest user);
+
+        Task<List<User>> GetAll();  
+
+        Task<User> GetById(int id);
+
+        Task Update(User user);
+
+        Task DeleteById(int id);    
     }
 }

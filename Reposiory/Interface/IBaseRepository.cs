@@ -13,11 +13,11 @@ namespace Reposiory.Interface
 
         Task<T> GetById(int id);
 
-        void Add (T entity);
+        Task Add (T entity);
 
-        void Remove (T entity);
+        Task Remove (int id);
 
-        void Update (T entity);
+        Task Update (T entity);
 
         IQueryable<T> GetQueryable(CancellationToken cancellationToken = default);
 

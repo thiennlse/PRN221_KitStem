@@ -34,9 +34,10 @@ namespace Reposiory
             return dbSet;
         }
 
-        public void Add(T entity)
+        public async Task Add(T entity)
         {
             _dbSet.Add(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<List<T>> GetAll()
@@ -49,14 +50,17 @@ namespace Reposiory
             return await _dbSet.FindAsync(id);
         }
 
-        public void Remove(T entity)
+        public async Task Remove(int id)
         {
+            var entity = _dbSet.Find(id);
             _dbSet.Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
             _dbSet.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public void CheckCancellationToken(CancellationToken cancellationToken = default)

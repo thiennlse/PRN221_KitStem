@@ -22,7 +22,7 @@ namespace KitStem_System.Pages
             if(txtPassword != null && txtUsername != null)
             {
                 await _service.Login(txtUsername, txtPassword);
-                Response.Redirect("/Privacy");
+                Response.Redirect("/UserPage/Index");
             }
 
         }

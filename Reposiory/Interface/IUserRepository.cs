@@ -13,5 +13,7 @@ namespace Reposiory.Interface
         Task<User> Login(string username, string password);
 
         Task Register(UserRequest user);
+
+        Task UpdateAsync(User user);
     }
 }

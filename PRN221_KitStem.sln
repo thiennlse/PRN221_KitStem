@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitStem_System", "KitStem_System\KitStem_System.csproj", "{7BDDD4B7-E3D1-4559-A0BE-5D048AB4DF4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KitStem_System", "KitStem_System\KitStem_System.csproj", "{7BDDD4B7-E3D1-4559-A0BE-5D048AB4DF4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{7119C88A-7FED-48EA-92E6-F0A63444026D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{7119C88A-7FED-48EA-92E6-F0A63444026D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reposiory", "Reposiory\Reposiory.csproj", "{A13C40DA-02B8-4C68-9DE1-06E73D389923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reposiory", "Reposiory\Reposiory.csproj", "{A13C40DA-02B8-4C68-9DE1-06E73D389923}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{0279707C-D564-4E08-A94B-90107C75FC84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{0279707C-D564-4E08-A94B-90107C75FC84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

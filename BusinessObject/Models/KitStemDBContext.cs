@@ -17,6 +17,21 @@ namespace BusinessObject.Models
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                IConfigurationBuilder configBuilder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json");
+
+                IConfiguration config = configBuilder.Build();
+                string connectionString = config.GetConnectionString("local");
+
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
+
         public virtual DbSet<CartItem> CartItems { get; set; } = null!;
         public virtual DbSet<Favorite> Favorites { get; set; } = null!;
         public virtual DbSet<HelpHistory> HelpHistories { get; set; } = null!;
