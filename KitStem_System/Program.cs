@@ -14,6 +14,11 @@ builder.Services.AddDbContext<KitStemDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("local")));
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ILabRepository, LabRepository>();
+builder.Services.AddScoped<ILabService, LabService>();
+builder.Services.AddScoped<IKitRepository, KitRepository>();
+builder.Services.AddScoped<IKitService, KitService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

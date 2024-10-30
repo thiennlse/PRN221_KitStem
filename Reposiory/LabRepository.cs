@@ -20,7 +20,7 @@ namespace Reposiory
 
         public async Task<List<Lab>> GetAll(int page, int pageSize, string? searchTerm)
         {
-            var query = GetQueryable<Lab>();
+            var query = GetQueryable().AsQueryable();
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 query = query.Where(l => l.Description.Contains(searchTerm));

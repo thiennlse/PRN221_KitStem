@@ -93,8 +93,7 @@ namespace BusinessObject.Models
             {
                 entity.ToTable("Help_Histories");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.StepId).HasColumnName("step_id");
 
@@ -103,11 +102,13 @@ namespace BusinessObject.Models
                 entity.HasOne(d => d.Step)
                     .WithMany(p => p.HelpHistories)
                     .HasForeignKey(d => d.StepId)
+                    .OnDelete(DeleteBehavior.NoAction)  // Prevent cascading delete
                     .HasConstraintName("FK__Help_Hist__step___32E0915F");
 
                 entity.HasOne(d => d.UserLab)
                     .WithMany(p => p.HelpHistories)
                     .HasForeignKey(d => d.UserLabId)
+                    .OnDelete(DeleteBehavior.NoAction)  // Prevent cascading delete here too
                     .HasConstraintName("FK__Help_Hist__user___31EC6D26");
             });
 
@@ -158,7 +159,7 @@ namespace BusinessObject.Models
                     .HasColumnName("id");
 
                 entity.Property(e => e.Description)
-                    .HasColumnType("text")
+                    .HasColumnType("nvarchar(max)")
                     .HasColumnName("description");
 
                 entity.Property(e => e.KitId).HasColumnName("kit_id");
@@ -229,7 +230,7 @@ namespace BusinessObject.Models
                     .HasColumnName("id");
 
                 entity.Property(e => e.Description)
-                    .HasColumnType("text")
+                    .HasColumnType("nvarchar(max)")
                     .HasColumnName("description");
 
                 entity.Property(e => e.Dob)

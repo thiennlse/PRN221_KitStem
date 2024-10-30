@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BusinessObject.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,13 +29,13 @@ namespace BusinessObject.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
+                    name = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
                     phone = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
                     email = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
                     password = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
                     username = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
                     role = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: true),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DOB = table.Column<DateTime>(type: "datetime", nullable: true),
                     status = table.Column<byte>(type: "tinyint", nullable: false)
                 },
@@ -51,7 +51,7 @@ namespace BusinessObject.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     kit_id = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false)
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -233,14 +233,12 @@ namespace BusinessObject.Migrations
                         name: "FK__Help_Hist__step___32E0915F",
                         column: x => x.step_id,
                         principalTable: "Steps",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK__Help_Hist__user___31EC6D26",
                         column: x => x.user_lab_id,
                         principalTable: "User_Labs",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(

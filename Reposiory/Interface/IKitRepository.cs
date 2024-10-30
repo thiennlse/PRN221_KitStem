@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Reposiory.Interface
 {
-    public interface ILabRepository : IBaseRepository<Lab>
+    public interface IKitRepository : IBaseRepository<KitStem>
     {
-        Task<List<Lab>> GetAll(int page, int pageSize, string? searchTerm);
-
-        Task UpdateAsync(Lab lab);
+        Task<List<KitStem>> GetAllAsync(int page, int pageSize, string? searchTerm);
     }
 }

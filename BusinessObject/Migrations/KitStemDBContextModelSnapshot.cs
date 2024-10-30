@@ -17,7 +17,7 @@ namespace BusinessObject.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.22")
+                .HasAnnotation("ProductVersion", "6.0.35")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -185,7 +185,7 @@ namespace BusinessObject.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<int?>("KitId")
@@ -293,7 +293,7 @@ namespace BusinessObject.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<DateTime?>("Dob")
@@ -307,7 +307,6 @@ namespace BusinessObject.Migrations
                         .HasColumnName("email");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)")
@@ -423,14 +422,14 @@ namespace BusinessObject.Migrations
                     b.HasOne("BusinessObject.Models.Step", "Step")
                         .WithMany("HelpHistories")
                         .HasForeignKey("StepId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK__Help_Hist__step___32E0915F");
 
                     b.HasOne("BusinessObject.Models.UserLab", "UserLab")
                         .WithMany("HelpHistories")
                         .HasForeignKey("UserLabId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK__Help_Hist__user___31EC6D26");
 

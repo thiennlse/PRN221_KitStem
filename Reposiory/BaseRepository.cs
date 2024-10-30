@@ -59,7 +59,7 @@ namespace Reposiory
 
         public async Task Update(T entity)
         {
-            _dbSet.Update(entity);
+            _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
 

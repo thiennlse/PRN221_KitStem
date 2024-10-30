@@ -1,0 +1,48 @@
+﻿@page
+@model KitStem_System.Pages.LabPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit Lab";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Lab</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Lab Information</h4>
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label asp-for="Lab.KitId" class="control-label"></label>
+                            <select asp-for="Lab.KitId" class="form-control" asp-items="ViewBag.KitId">
+                                <option value="">Select a Kit</option>
+                            </select>
+                            <span asp-validation-for="Lab.KitId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Lab.Description" class="control-label"></label>
+                            <input asp-for="Lab.Description" class="form-control" placeholder="Enter lab description" />
+                            <span asp-validation-for="Lab.Description" class="text-danger"></span>
+                        </div>
+                        </br>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Save Changes" class="btn btn-primary btn-lg me-2" />
+                            <a asp-page="Index" class="btn btn-secondary btn-lg">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

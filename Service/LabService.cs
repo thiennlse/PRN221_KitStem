@@ -28,7 +28,7 @@ namespace Service
             await _repository.Remove(id);
         }
 
-        public async Task<List<Lab>> GetAll(int page, int pageSize, string searchTerm)
+        public async Task<List<Lab>> GetAll(int page, int pageSize, string? searchTerm)
         {
             return await _repository.GetAll(page, pageSize, searchTerm);
         }
@@ -38,10 +38,10 @@ namespace Service
             return await _repository.GetById(id); 
         }
 
-        public async Task Update(int id, Lab lab)
+        public async Task Update(int id,Lab lab)
         {
-            var _lab = await GetById(id);
-            await _repository.UpdateAsync(_lab);
+            lab.Id = id;
+            await _repository.UpdateAsync(lab);
         }
     }
 }
