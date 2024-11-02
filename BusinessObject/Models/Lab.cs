@@ -10,6 +10,7 @@ namespace BusinessObject.Models
     {
         [Required]
         public int? KitId { get; set; }
+        public string? Image {  get; set; }
         [Required]
         public string? Description { get; set; }
         [Required]

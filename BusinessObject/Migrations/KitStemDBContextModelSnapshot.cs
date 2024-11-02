@@ -164,6 +164,9 @@ namespace BusinessObject.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("attribute");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("Status")
                         .IsRequired()
                         .HasColumnType("int")
@@ -187,6 +190,9 @@ namespace BusinessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("KitId")
                         .IsRequired()
@@ -306,6 +312,9 @@ namespace BusinessObject.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("email");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(255)
                         .IsUnicode(false)
@@ -355,6 +364,9 @@ namespace BusinessObject.Migrations
                         .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("LabId")
                         .IsRequired()

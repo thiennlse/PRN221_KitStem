@@ -9,6 +9,7 @@ namespace BusinessObject.Models
     public partial class KitStem : BaseEntity
     {
         public string? Attribute { get; set; }
+        public string? Image { get; set; }
         [Required]
         public int? Status { get; set; }
         [JsonIgnore]
