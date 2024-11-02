@@ -30,13 +30,16 @@ namespace KitStem_System.Pages.LabPage
 
         [BindProperty]
         public Lab Lab { get; set; } = default!;
-        
+        [BindProperty]
+        public IFormFile LabImage { get; set; } 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             try
             {
+                var image = await _labService.UploadImage(LabImage);
+                Lab.Image = image;
                 await _labService.Add(Lab);
             }
             catch (Exception ex) 

@@ -10,6 +10,7 @@ namespace BusinessObject.Models
     {
         [Required]
         public int? UserId { get; set; }
+        public string? Image {  get; set; }
         [Required]
         public int? LabId { get; set; }
         [JsonIgnore]

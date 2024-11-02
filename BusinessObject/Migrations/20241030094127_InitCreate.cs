@@ -16,6 +16,7 @@ namespace BusinessObject.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     attribute = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -32,6 +33,7 @@ namespace BusinessObject.Migrations
                     name = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
                     phone = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
                     email = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     password = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
                     username = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
                     role = table.Column<int>(type: "int", nullable: false),
@@ -51,6 +53,7 @@ namespace BusinessObject.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     kit_id = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -170,6 +173,7 @@ namespace BusinessObject.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     user_id = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     lab_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

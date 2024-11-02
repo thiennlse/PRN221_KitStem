@@ -18,7 +18,8 @@ namespace KitStem_System.Pages.LabPage
 
         [BindProperty]
         public Lab Lab { get; set; } = default!;
-
+        [BindProperty]
+        public IFormFile LabImage { get; set; }
         public async Task<IActionResult> OnGetAsync(int id)
         {
             try
@@ -37,6 +38,8 @@ namespace KitStem_System.Pages.LabPage
         {
             try
             {
+                var image = await _labService.UploadImage(LabImage);
+                Lab.Image = image;
                 await _labService.Update(id,Lab);
             }
             catch (Exception ex) 
