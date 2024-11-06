@@ -1,16 +1,18 @@
 ﻿using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
+using Reposiory;
+using Reposiory.Interface;
 using Repository.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class CartItemRepository : ICartItemRepository
+    public class CartItemRepository : BaseRepository<CartItem>, ICartItemRepository
     {
         private readonly KitStemDBContext _context;
 
-        public CartItemRepository(KitStemDBContext context)
+        public CartItemRepository(KitStemDBContext context) : base(context)
         {
             _context = context;
         }

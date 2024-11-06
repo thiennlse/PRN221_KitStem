@@ -2,6 +2,8 @@ using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using Reposiory;
 using Reposiory.Interface;
+using Repository;
+using Repository.Interface;
 using Service;
 using Service.Interface;
 
@@ -18,6 +20,8 @@ builder.Services.AddScoped<ILabRepository, LabRepository>();
 builder.Services.AddScoped<ILabService, LabService>();
 builder.Services.AddScoped<IKitRepository, KitRepository>();
 builder.Services.AddScoped<IKitService, KitService>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<ICartItemService, CartItemService>();
 
 var app = builder.Build();
 

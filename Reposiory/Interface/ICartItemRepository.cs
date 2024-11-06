@@ -1,10 +1,11 @@
 ﻿using BusinessObject.Models;
+using Reposiory.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Repository.Interface
 {
-    public interface ICartItemRepository
+    public interface ICartItemRepository:IBaseRepository<CartItem>
     {
         Task AddAsync(CartItem cartItem);
         Task RemoveAsync(int  kitId);

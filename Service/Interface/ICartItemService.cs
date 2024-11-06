@@ -9,7 +9,7 @@ namespace Service.Interface
 {
     public interface ICartItemService
     {
-        Task<List<CartItem>> GetAllAsync(int page, int pageSize, string? searchTerm);
+        public  Task<List<CartItem>> GetAllIncludingKitAsync(int page, int pageSize, int kitId);
 
         Task<CartItem> GetById(int id);
 
