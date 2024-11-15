@@ -1,5 +1,4 @@
 ﻿using BusinessObject.Models;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +10,16 @@ namespace Service.Interface
     public interface ILabService
     {
         Task<List<Lab>> GetAll(int page, int pageSize, string? searchTerm);
-        Task<string> UploadImage(IFormFile file);
-        Task<Lab> GetById(int id);
 
+        Task<Lab> GetById(int id);
         Task Add(Lab lab);
 
-        Task Update(int id, Lab lab);
+        Task Update(int id,Lab lab);
 
         Task Delete(int id);
+
+        Task<List<Lab>> GetByKitId(int kitId);
+        Task AddLabAsync(int kitId, string description, string step, int maxHelp,int DeadlineDate, int status);
+        Lab GetLabWithSteps(int labId);
     }
 }
