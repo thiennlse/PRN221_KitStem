@@ -1,0 +1,60 @@
+﻿@page
+@model KitStem_System.Pages.KitPage.CreateModel
+@{
+    ViewData["Title"] = "Create Kit";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Create Kit</h2>
+            <form method="post" enctype="multipart/form-data" class="border p-4 shadow-sm rounded bg-white">
+
+                <div class="mb-3">
+                    <label asp-for="Kit.Name" class="form-label">Kit Name</label>
+                    <input asp-for="Kit.Name" class="form-control" placeholder="Enter Kit Name" />
+                    <span asp-validation-for="Kit.Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Kit.Attribute" class="form-label">Attribute</label>
+                    <input asp-for="Kit.Attribute" class="form-control" placeholder="Enter Kit Attribute" />
+                    <span asp-validation-for="Kit.Attribute" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Kit.Status" class="form-label">Status</label>
+                    <select asp-for="Kit.Status" class="form-select">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                    <span asp-validation-for="Kit.Status" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Kit.quantity" class="form-label">Quantity</label>
+                    <input asp-for="Kit.quantity" class="form-control" type="number" min="0" placeholder="Enter Quantity" />
+                    <span asp-validation-for="Kit.quantity" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Kit.price" class="form-label">Price</label>
+                    <input asp-for="Kit.price" class="form-control" type="number" step="0.01" min="0" placeholder="Enter Price" />
+                    <span asp-validation-for="Kit.price" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageFile" class="form-label">Upload Image</label>
+                    <input asp-for="ImageFile" class="form-control" type="file" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Create Kit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

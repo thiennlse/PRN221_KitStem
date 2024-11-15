@@ -1,0 +1,42 @@
+﻿@page
+@model KitStem_System.Pages.MyKit.MyKitModel
+@{
+    ViewData["Title"] = "My Kits";
+}
+
+<h1>My Kits</h1>
+
+<div>
+    @if (Model.Kits.Count == 0)
+    {
+        <p>You have not purchased any kits.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Kit Name</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kit in Model.Kits)
+                {
+                    <tr>
+                        <td>@kit.Name</td>
+                        <td>
+                            <img src="@kit.Image" alt="Kit Image" width="100" height="100" />
+                        </td>
+                        <td>
+                            <a asp-page="./ListLab" asp-route-kitId="@kit.Id" class="btn btn-primary">
+                                List Lab
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

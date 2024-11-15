@@ -1,0 +1,121 @@
+﻿@page
+@model KitStem_System.Pages.CartShopPage.CartShopModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .note {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .product-image {
+            width: 100px;
+            height: auto;
+        }
+
+        .price, .total-price {
+            font-size: 1.25rem;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .quantity-buttons .btn {
+            width: 40px;
+            font-size: 1rem;
+        }
+
+        .checkout-btn {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Order Note Section -->
+        <div class="note">
+            <p>Please make sure to review product details, warranty, and return policies before placing your order. Inspect the package carefully upon receipt to ensure it includes all accessories and is free from damage.</p>
+            <p>You will receive a confirmation call from our team within 24 hours after placing your order. Thank you for choosing and supporting Hshop!</p>
+        </div>
+
+        <!-- Shopping Cart Section -->
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Shopping Cart</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Product Information</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Cart)
+                        {
+                            <tr id="cart-item-@item.Id">
+                                <td>
+                                    <img src="@item.Kit.Image" class="product-image me-2" alt="Product Image" style="max-width: 50px;" />
+                                    <span>@item.Kit.Name</span>
+                                </td>
+                                <td class="price">$@item.Kit.price</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <form method="post" asp-page-handler="ChangeQuantity" style="margin-right: 5px;">
+                                            <input type="hidden" name="itemId" value="@item.Id" />
+                                            <input type="hidden" name="amount" value="-1" />
+                                            <button type="submit" class="btn btn-outline-primary">-</button>
+                                        </form>
+                                        <span class="form-control text-center" style="max-width: 30px;">@item.Quantity</span>
+                                        <form method="post" asp-page-handler="ChangeQuantity" style="margin-left: 5px;">
+                                            <input type="hidden" name="itemId" value="@item.Id" />
+                                            <input type="hidden" name="amount" value="1" />
+                                            <button type="submit" class="btn btn-outline-primary">+</button>
+                                        </form>
+                                    </div>
+                                </td>
+                                <td class="price">$@(item.Kit.price * item.Quantity)</td>
+                                <td>
+                                    <form method="post" asp-page-handler="RemoveItem">
+                                        <input type="hidden" name="itemId" value="@item.Id" />
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- Total Price and Checkout Button -->
+                <div class="d-flex justify-content-between mt-4">
+                    <h5>Total Price: <span class="total-price">$@Model.TotalPrice</span></h5>
+                    <form method="post" asp-page-handler="Checkout">
+                        <button type="submit" class="btn checkout-btn">Checkout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping Time Information -->
+        <div class="note mt-4">
+            <h6>Shipping Time</h6>
+            <p>Orders placed after 3:00 PM will be shipped the next day. Orders are not shipped on Sundays. For special delivery requests, please contact our sales team via Zalo Hshopvn - Electronics & Robots.</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+﻿@page
+@model KitStem_System.Pages.KitShopPage.KitDetailShopModel
+@{
+    var role = HttpContext.Session.GetInt32("roleid") ?? 0;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kit Details - @Model.Kit?.Name</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        .kit-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .kit-detail-card {
+            border: none;
+        }
+
+        .kit-image {
+            object-fit: cover;
+            width: 400px;
+            height: 300px;
+        }
+
+        .price {
+            font-size: 2rem;
+            color: red;
+            font-weight: bold;
+        }
+
+        .quantity-buttons .btn {
+            width: 40px;
+            font-size: 1.2rem;
+        }
+
+        .btn-add-to-cart {
+            background-color: #ffdd00;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .btn-buy-now {
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+        }
+
+            .btn-buy-now:hover {
+                color: white;
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        @if (Model.Kit != null)
+        {
+            <div class="card">
+                <div class="row p-3">
+                    <div class="col-md-6">
+                        <img src="@Model.Kit?.Image"
+                             class="kit-image rounded mx-auto d-block" alt="@Model.Kit.Name" />
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="kit-title">@Model.Kit?.Name</h1>
+                        <p><strong>Description:</strong> @Model.Kit?.Attribute</p>
+
+                        <p class="price">$@Model.Kit?.price</p>
+
+                        <div class="mb-3">
+                            <label><strong>Quantity: @Model.Kit?.quantity</strong></label>
+                            <div class="input-group quantity-buttons">
+                                <button class="btn btn-outline-primary" onclick="changeQuantity(-1)">-</button>
+                                <input type="text" id="quantityInput" class="form-control text-center" value="1" style="max-width: 60px;" readonly />
+                                <button class="btn btn-outline-primary" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+
+                        @if (role == 1)
+                        {
+                            <form method="post" asp-page-handler="AddToCart">
+                                <input type="hidden" name="kitId" value="@Model.Kit?.Id" />
+                                <input type="hidden" name="quantity" id="quantityInputForm" value="1" />
+                                <button type="submit" class="btn btn-add-to-cart mt-3">ADD TO CART</button>
+                            </form>
+
+                            <form method="post" asp-page-handler="BuyNow">
+                                <input type="hidden" name="kitId" value="@Model.Kit?.Id" />
+                                <input type="hidden" name="quantity" id="quantityInputBuyNow" value="1" />
+                                <button type="submit" class="btn btn-buy-now mt-2">BUY NOW</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <p class="text-warning mt-3">You must be logged in as a User to add to cart or buy.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-5">
+                <div class="container ">
+
+                    <h3 class="mt-5">Related Products</h3>
+                    <div class="row">
+                        @foreach (var relatedKit in Model.RelatedKits)
+                        {
+                            <div class="col-md-3">
+                                <div class="card mb-4 shadow-sm">
+                                    <img src="@relatedKit.Image" class="card-img-top" alt="@relatedKit.Name">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-truncate" title="@relatedKit.Name">@relatedKit.Name</h6>
+                                        <p class="card-text text-danger fw-bold">$@relatedKit.price</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <a href="@Url.Page("/KitShopPage/KitDetailShop", new { id = relatedKit.Id })" class="btn btn-outline-primary btn-sm">View Details</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="text-center mb-3 ">
+                        <a href="/KitShopPage/ViewKitShop" class="btn btn-primary">See all products</a>
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                Kit details not found.
+            </div>
+        }
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function changeQuantity(amount) {
+            const quantityInput = document.getElementById("quantityInput");
+            const quantityInputForm = document.getElementById("quantityInputForm");
+            let currentQuantity = parseInt(quantityInput.value);
+
+            if (currentQuantity + amount > 0) {
+                quantityInput.value = currentQuantity + amount;
+                quantityInputForm.value = currentQuantity + amount;
+            }
+        }
+    </script>
+</body>
+</html>
