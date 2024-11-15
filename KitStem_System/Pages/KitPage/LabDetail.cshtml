@@ -1,0 +1,79 @@
+﻿@page
+@model KitStem_System.Pages.KitPage.LabDetailModel
+@{
+    ViewData["Title"] = "Lab Details";
+}
+
+<h1>Lab Details</h1>
+
+<div>
+    <h4>Lab Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm-10">@Model.Lab.Description</dd>
+
+        <dt class="col-sm-2">Step</dt>
+        <dd class="col-sm-10">@Model.Lab.Step</dd>
+
+        <dt class="col-sm-2">Max Help</dt>
+        <dd class="col-sm-10">@Model.Lab.MaxHelp</dd>
+
+        <dt class="col-sm-2">Deadline (Days)</dt>
+        <dd class="col-sm-10">@Model.Lab.DeadlineDay</dd>
+
+        <dt class="col-sm-2">Status</dt>
+        <dd class="col-sm-10">
+            @(Model.Lab.Status == 1 ? "Active" : "Inactive")
+        </dd>
+    </dl>
+</div>
+
+<!-- Steps Section -->
+<div>
+    <h4>Steps</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>This Step</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var step in Model.Lab.Steps)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(step.Description))
+                        {
+                            <a href="@step.Description" class="btn btn-info" download>
+                                Download Document
+                            </a>
+                        }
+                        else
+                        {
+                            <span>No document available</span>
+                        }
+                    </td>
+
+                    <td>@step.ThisStep</td>
+                    <td>@(step.Status == 1 ? "Active" : "Inactive")</td>
+
+                    <td>
+                        <a asp-page="./UploadStepDocument" asp-route-stepId="@step.Id" class="btn btn-primary">
+                            Upload / Edit Document
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a asp-page="./EditLab" asp-route-id="@Model.Lab.Id" class="btn btn-primary">Edit Lab</a> |
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</div>

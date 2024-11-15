@@ -1,0 +1,15 @@
+﻿using BusinessObject.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Service.Interface
+{
+    public interface IHelpHistoryService
+    {
+        Task CreateHelpHistoryAsync(HelpHistory helpHistory);
+        Task<HelpHistory> GetHelpHistoryAsync(int id, int stepId);
+    }
+}

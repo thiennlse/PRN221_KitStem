@@ -12,6 +12,8 @@ namespace BusinessObject.Models
         public int? LabId { get; set; }
         public string? Description { get; set; }
         [JsonIgnore]
+        public int? ThisStep { get; set; }
+        public int? Status { get; set; }
         public virtual Lab? Lab { get; set; }
         [JsonIgnore]
         public virtual ICollection<HelpHistory> HelpHistories { get; set; }

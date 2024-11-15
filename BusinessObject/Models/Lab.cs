@@ -10,10 +10,14 @@ namespace BusinessObject.Models
     {
         [Required]
         public int? KitId { get; set; }
-        public string? Image {  get; set; }
         [Required]
         public string? Description { get; set; }
         [Required]
+        public int? Step { get; set; }
+        public int? MaxHelp { get; set; }
+        public int? DeadlineDay { get; set; }
+        public int? Status { get; set; }
+
         public virtual KitStem? Kit { get; set; }
         [JsonIgnore]
         public virtual ICollection<Step> Steps { get; set; }
