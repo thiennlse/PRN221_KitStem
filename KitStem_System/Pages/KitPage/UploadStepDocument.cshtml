@@ -1,0 +1,18 @@
+﻿@page
+@model KitStem_System.Pages.KitPage.UploadStepDocumentModel
+@{
+    ViewData["Title"] = "Upload Step Document";
+}
+
+<h1>Upload Document for Step</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Document" class="control-label">Choose Document</label>
+        <input asp-for="Document" class="form-control" type="file" />
+        <span asp-validation-for="Document" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="StepId" />
+    <button type="submit" class="btn btn-primary">Upload Document</button>
+    <a asp-page="./LabDetail" asp-route-id="@Model.Step.LabId" class="btn btn-secondary">Cancel</a>
+</form>

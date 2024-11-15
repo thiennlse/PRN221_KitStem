@@ -1,0 +1,111 @@
+﻿@page
+@model KitStem_System.Pages.KitPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>KitStem</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KitStem.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KitStem.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KitStem.Attribute)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KitStem.Attribute)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KitStem.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.KitStem.Status == 1)
+            {
+                <span>Active</span>
+            }
+            else
+            {
+                <span>UnActive</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KitStem.Image)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.KitStem.Image))
+            {
+                <img src="@Model.KitStem.Image" alt="KitStem Image" class="img-fluid" />
+            }
+            else
+            {
+                <span>No image available</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KitStem.quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KitStem.quantity)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KitStem.price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KitStem.price)
+        </dd>
+    </dl>
+</div>
+
+<!-- Labs Section -->
+<div>
+    <h4>Associated Labs</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Step</th>
+                <th>Status</th>
+                <th>Max Help</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lab in Model.Labs)
+            {
+                <tr>
+                    <td>@lab.Description</td>
+                    <td>@lab.Step</td>
+                    <td>@(lab.Status == 1 ? "Active" : "UnActive")</td>
+                    <td>@lab.MaxHelp</td>
+                    <td>
+                        <a href="@Url.Page("./EditLab", new { id = lab.Id })" class="btn btn-primary">Update</a> |
+                        <a href="@Url.Page("./DeleteLab", new { id = lab.Id })" class="btn btn-danger">Delete</a> |
+                        <a href="@Url.Page("./LabDetail", new { id = lab.Id })" class="btn btn-info">Lab Detail</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Add Lab Button -->
+    <a href="@Url.Page("./AddLab", new { kitId = Model.KitStem.Id })" class="btn btn-success">Add Lab</a>
+</div>
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.KitStem?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

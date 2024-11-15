@@ -1,0 +1,57 @@
+﻿@page
+@model KitStem_System.Pages.MyKit.MyLabModel
+@{
+    ViewData["Title"] = "Lab Information";
+}
+
+<h1>Lab Information</h1>
+
+@if (Model.Lab == null)
+{
+    <p>Lab not found.</p>
+}
+else
+{
+    <h3>@Model.Lab.Description</h3>
+
+    <h4>Steps</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Step Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var step in Model.Lab.Steps)
+            {
+                <tr>
+                    <td>
+                        @if (Model.UserLab != null && Model.UserLab.HelpHistories != null && Model.UserLab.HelpHistories.Any(h => h.StepId == step.Id))
+                        {
+                            <p>@step.Description</p>
+                        }
+                        else
+                        {
+                            <p>Not available</p>
+                        }
+                    </td>
+                    <td>
+                        @if (Model.UserLab != null && Model.CanHelp && (Model.UserLab.HelpHistories?.Any(h => h.StepId == step.Id) != true))
+                        {
+                            <form method="post" asp-page-handler="Help">
+                                <input type="hidden" name="stepId" value="@step.Id" />
+                                <input type="hidden" name="userLabId" value="@Model.UserLab.Id" />
+                                <button type="submit" class="btn btn-primary">Help</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span>Already helped or no help remaining</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

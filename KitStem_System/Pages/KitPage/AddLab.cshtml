@@ -1,0 +1,43 @@
+﻿@page
+@model KitStem_System.Pages.KitPage.AddLabModel
+@{
+    ViewData["Title"] = "Add Lab";
+}
+
+<h1>Add Lab to KitStem</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" class="form-control" id="Description" name="Description" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Step">Step</label>
+        <input type="text" class="form-control" id="Step" name="Step" required />
+    </div>
+
+    <div class="form-group">
+        <label for="MaxHelp">Max Help</label>
+        <input type="number" class="form-control" id="MaxHelp" name="MaxHelp" required />
+    </div>
+
+    <div class="form-group">
+        <label for="DeadlineDate">Deadline Day</label>
+        <input type="number" class="form-control" id="DeadlineDate" name="DeadlineDate" required />
+    </div>
+
+    <div class="form-group">
+        <label>Status</label>
+        <select class="form-control" name="Status">
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Add Lab</button>
+</form>
+
+<div>
+    <a href="@Url.Page("./Details", new { id = Model.KitStemId })">Back to Details</a>
+</div>

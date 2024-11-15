@@ -1,0 +1,53 @@
+﻿@page
+@model KitStem_System.Pages.MyKit.ListLabModel
+@{
+    ViewData["Title"] = "List Labs for Kit";
+}
+
+<h1>List Labs for Kit</h1>
+
+<div>
+    @if (Model.Labs.Count == 0)
+    {
+        <p>No labs are available for this Kit.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Step</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lab in Model.Labs)
+                {
+                    <tr>
+                        <td>@lab.Description</td>
+                        <td>@lab.Step</td>
+                        <td>
+                            @if (Model.LabEnrollmentStatuses.ContainsKey(lab.Id) && Model.LabEnrollmentStatuses[lab.Id])
+                            {
+                                <a asp-page="/MyKit/MyLab" asp-route-labId="@lab.Id" class="btn btn-info">
+                                    Lab Detail
+                                </a>
+                            }
+                            else
+                            {
+                                <form method="post" asp-page-handler="Enroll">
+                                    <input type="hidden" name="labId" value="@lab.Id" />
+                                    <input type="hidden" name="kitId" value="@Model.KitId" />
+                                    <button type="submit" class="btn btn-primary">
+                                        Enroll Lab
+                                    </button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

@@ -9,9 +9,9 @@ namespace BusinessObject.Models
     public partial class CartItem :BaseEntity
     {   
         [Required]
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         [Required]
-        public int? KitId { get; set; }
+        public int KitId { get; set; }
         [Required]
         public int? Quantity { get; set; }
 

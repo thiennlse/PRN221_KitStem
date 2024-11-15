@@ -12,5 +12,8 @@ namespace Reposiory.Interface
         Task<List<Lab>> GetAll(int page, int pageSize, string? searchTerm);
 
         Task UpdateAsync(Lab lab);
+        Task<List<Lab>> GetByKitId(int kitId);
+        Task AddLabAsync(int kitId, string description, string step, int maxHelp,int deadlineDate, int status);
+        Lab GetLabWithSteps(int labId);
     }
 }

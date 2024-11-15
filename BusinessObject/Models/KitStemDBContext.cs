@@ -50,7 +50,8 @@ namespace BusinessObject.Models
                 entity.ToTable("Cart_Items");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("id");
+                .HasColumnName("id")
+                .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.KitId).HasColumnName("kit_id");
 
@@ -102,13 +103,13 @@ namespace BusinessObject.Models
                 entity.HasOne(d => d.Step)
                     .WithMany(p => p.HelpHistories)
                     .HasForeignKey(d => d.StepId)
-                    .OnDelete(DeleteBehavior.NoAction)  // Prevent cascading delete
+                    .OnDelete(DeleteBehavior.NoAction)  
                     .HasConstraintName("FK__Help_Hist__step___32E0915F");
 
                 entity.HasOne(d => d.UserLab)
                     .WithMany(p => p.HelpHistories)
                     .HasForeignKey(d => d.UserLabId)
-                    .OnDelete(DeleteBehavior.NoAction)  // Prevent cascading delete here too
+                    .OnDelete(DeleteBehavior.NoAction)  
                     .HasConstraintName("FK__Help_Hist__user___31EC6D26");
             });
 
@@ -150,6 +151,22 @@ namespace BusinessObject.Models
                     .IsUnicode(false)
                     .HasColumnName("attribute");
 
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Image)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("imageUrl");
+
+                entity.Property(e => e.quantity)
+                    .HasColumnName("quantity");
+
+                entity.Property(e => e.price)
+                    .HasColumnName("price");
+
                 entity.Property(e => e.Status).HasColumnName("status");
             });
 
@@ -161,6 +178,14 @@ namespace BusinessObject.Models
                 entity.Property(e => e.Description)
                     .HasColumnType("nvarchar(max)")
                     .HasColumnName("description");
+                entity.Property(e => e.Step)
+                    .HasColumnName("step");
+                entity.Property(e => e.MaxHelp)
+                    .HasColumnName("help");
+                entity.Property(e => e.DeadlineDay)
+                    .HasColumnName("deadline_day");
+                entity.Property(e => e.Status)
+                    .HasColumnName("Status");
 
                 entity.Property(e => e.KitId).HasColumnName("kit_id");
 
@@ -215,6 +240,12 @@ namespace BusinessObject.Models
                 entity.Property(e => e.Description)
                     .HasColumnType("text")
                     .HasColumnName("description");
+
+                entity.Property(e => e.ThisStep)
+                    .HasColumnName("step");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status");
 
                 entity.Property(e => e.LabId).HasColumnName("lab_id");
 
@@ -273,6 +304,20 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id");
+
+                entity.Property(e => e.HelpRemaining)
+                    .HasColumnName("help_remaining");
+
+                entity.Property(e => e.ImageUrl)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("imageUrl");
+
+                entity.Property(e => e.Deadline)
+                    .HasColumnType("datetime")
+                    .HasColumnName("deadline");
+
+
 
                 entity.Property(e => e.LabId).HasColumnName("lab_id");
 
