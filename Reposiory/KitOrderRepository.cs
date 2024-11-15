@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using Reposiory.Interface;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,23 @@ namespace Reposiory
     {
         public KitOrderRepository(KitStemDBContext dbContext) : base(dbContext)
         {
+            
+        }
 
+        public async Task<List<KitOrder>> GetAllAsync()
+        {
+            return await _dbSet
+                .Include(o => o.Order)
+                .Include(o => o.Kit)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<KitOrder> GetByIdAsync(int id)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o => o.Id.Equals(id));
         }
     }
 }

@@ -6,28 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.Models;
+using Service.Interface;
 
 namespace KitStem_System.Pages.KitOrderPage
 {
     public class IndexModel : PageModel
     {
-        private readonly BusinessObject.Models.KitStemDBContext _context;
+        private readonly IKitOrderService _kitService;
 
-        public IndexModel(BusinessObject.Models.KitStemDBContext context)
+
+        public IndexModel(IKitOrderService kitService)
         {
-            _context = context;
+            _kitService = kitService;
         }
 
         public IList<KitOrder> KitOrder { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.KitOrders != null)
-            {
-                KitOrder = await _context.KitOrders
-                .Include(k => k.Kit)
-                .Include(k => k.Order).ToListAsync();
-            }
+            KitOrder = await _kitService.GetAll();
         }
     }
 }

@@ -18,6 +18,8 @@ builder.Services.AddScoped<ILabRepository, LabRepository>();
 builder.Services.AddScoped<ILabService, LabService>();
 builder.Services.AddScoped<IKitRepository, KitRepository>();
 builder.Services.AddScoped<IKitService, KitService>();
+builder.Services.AddScoped<IKitOrderRepository, KitOrderRepository>();
+builder.Services.AddScoped<IKitOrderService, KitOrderService>();
 
 var app = builder.Build();
 

@@ -1,15 +1,16 @@
 ﻿using BusinessObject.Models;
+using BusinessObject.RequestModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Reposiory.Interface
 {
-    public interface IKitOrderRepository : IBaseRepository<KitOrder>
+    public interface IStepRepository : IBaseRepository<Step>
     {
-        Task<List<KitOrder>> GetAllAsync();
-        Task<KitOrder> GetByIdAsync(int id);
+        Task<Step> UpdateAsync(Step step);
     }
 }
