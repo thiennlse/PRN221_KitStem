@@ -1,4 +1,6 @@
 ﻿using BusinessObject.Models;
+using BusinessObject.RequestModel;
+using PayPal.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace Service.Interface
 {
-     public interface IOrderService
+    public interface IOrderService
     {
-        Task<IEnumerable<Order>> GetAllOrdersAsync();
-        Task<Order> GetOrderByIdAsync(int userId);
-        Task CreateOrderAsync(Order order);
-        Task UpdateOrderAsync(Order order);
-        Task DeleteOrderAsync(int userId);
+
+        Task<BusinessObject.Models.Order> GetById(int id);
+        Payment CreatePayPalPayment(decimal total, string SuccessUrl, string cancelUrl);
+        Task<BusinessObject.Models.Order> CreateOrder(List<CartItem> cartItems);
+        Task<List<BusinessObject.Models.Order>> GetOrdersByUserId(int userId);
+        Task<List<KitStem>> GetKitByUserId(int UserId);
     }
 }
