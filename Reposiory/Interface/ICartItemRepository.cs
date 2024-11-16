@@ -1,17 +1,17 @@
 ﻿using BusinessObject.Models;
-using Reposiory.Interface;
+using BusinessObject.RequestModel;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Interface
+namespace Reposiory.Interface
 {
-    public interface ICartItemRepository:IBaseRepository<CartItem>
+    public interface ICartItemRepository : IBaseRepository<CartItem>
     {
-        Task AddAsync(CartItem cartItem);
-        Task RemoveAsync(int  kitId);
-        Task<List<CartItem>> GetAllAsync();
-        public Task<List<CartItem>> GetAllIncludingKitAsync(int page, int pageSize, int kitId);
-        Task<CartItem?> GetByIdAsync(int kitId);
-        Task UpdateAsync(CartItem cartItem);
+        Task AddCartItem(int userId, int kitId , int quantity);
+        Task UpdateAsync(CartItem cart);
+        Task<List<CartItem>> GetCartItemsByUserId(int userId);
     }
 }

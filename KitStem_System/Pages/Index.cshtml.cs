@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessObject.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interface;
 
@@ -12,19 +14,42 @@ namespace KitStem_System.Pages
         {
             _service = service;
         }
-        [BindProperty]
-        public string txtUsername { get; set; } = default!;
-        [BindProperty]
-        public string txtPassword { get; set; } = default!;
 
-        public async Task OnPostAsync(string txtUsername , string txtPassword)
+        public void OnGet()
         {
-            if(txtPassword != null && txtUsername != null)
+            // Có thể xử lý gì đó trong phương thức GET (nếu cần)
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            string email = Request.Form["txtUsername"];
+            string password = Request.Form["txtPassword"];
+
+            User user = await _service.Login(email, password);
+
+            if (user == null)
             {
-                await _service.Login(txtUsername, txtPassword);
-                Response.Redirect("/UserPage/Index");
+                TempData["ErrorMessage"] = "Email or Password is incorrect!";
+                return RedirectToPage("/Index");
             }
 
+
+            HttpContext.Session.SetInt32("userid", user.Id);
+            HttpContext.Session.SetInt32("roleid", (int)user.Role);
+            HttpContext.Session.SetString("username", user.Name);
+
+
+            if (user.Role == 1)
+            {
+                return RedirectToPage("/KitShopPage/ViewKitShop");
+            }
+
+            if (user.Role == 2)
+            {
+                return RedirectToPage("/KitPage/Index");
+            }
+
+            return RedirectToPage("/Index");
         }
     }
 }

@@ -9,17 +9,12 @@ namespace Service.Interface
 {
     public interface ICartItemService
     {
-        public  Task<List<CartItem>> GetAllIncludingKitAsync(int page, int pageSize, int kitId);
-
+        Task AddCartItem(int userId, int kitId, int quantity);
+        Task UpdateAsync(CartItem cart);
+        Task<List<CartItem>> GetCartItemsByUserId(int userId);
         Task<CartItem> GetById(int id);
-
-        Task Add(CartItem cartItem);
-
-        Task Update(int id, CartItem cartItem);
-
-        Task Delete(int id);
-
-      
+        Task DeleteById(int id);
 
     }
+
 }

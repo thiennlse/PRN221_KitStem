@@ -1,7 +1,7 @@
 ﻿@page
-@model IndexModel
+@model RegisterModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Register";
 }
 
 <div class="container mt-5">
@@ -9,7 +9,7 @@
         <div class="col-md-6 col-lg-4">
             <div class="card shadow-sm border-0">
                 <div class="card-header text-center">
-                    <h4 class="mb-0">Login</h4>
+                    <h4 class="mb-0">Register</h4>
                 </div>
                 <div class="card-body">
                     <form method="post">
@@ -21,12 +21,16 @@
                             <label for="txtPassword" class="form-label">Password</label>
                             <input type="password" class="form-control" id="txtPassword" name="txtPassword" required />
                         </div>
+                        <div class="mb-3">
+                            <label for="txtConfirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="txtConfirmPassword" name="txtConfirmPassword" required />
+                        </div>
                         <div class="d-grid">
-                            <button type="submit" name="btLogin" class="btn btn-primary">Login</button>
+                            <button type="submit" name="btRegister" class="btn btn-primary">Register</button>
                         </div>
                         <div class="mt-3 text-center">
-                            <span>Don't have an account? </span>
-                            <a asp-page="/Register" class="text-primary">Register</a>
+                            <span>Already have an account? </span>
+                            <a asp-page="/Index" class="text-primary">Login</a>
                         </div>
                     </form>
                 </div>

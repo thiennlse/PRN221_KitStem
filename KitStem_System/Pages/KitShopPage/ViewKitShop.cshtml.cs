@@ -1,5 +1,4 @@
 using BusinessObject.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interface;
@@ -24,15 +23,6 @@ namespace KitStem_System.Pages.KitShopPage
         {
             SearchTerm = searchTerm;
             Kits = await _kitService.GetAllAsync(1, 10, searchTerm);
-        }
-
-        public async Task<IActionResult> OnPostLogoutAsync()
-        {
-            // Sign out the user
-            await HttpContext.SignOutAsync();
-
-            // Redirect to Index page
-            return RedirectToPage("/Index");
         }
     }
 }

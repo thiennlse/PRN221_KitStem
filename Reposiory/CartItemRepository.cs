@@ -1,12 +1,14 @@
 ﻿using BusinessObject.Models;
+using BusinessObject.RequestModel;
 using Microsoft.EntityFrameworkCore;
-using Reposiory;
 using Reposiory.Interface;
-using Repository.Interface;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository
+namespace Reposiory
 {
     public class CartItemRepository : BaseRepository<CartItem>, ICartItemRepository
     {
@@ -17,53 +19,58 @@ namespace Repository
             _context = context;
         }
 
-        public async Task AddAsync(CartItem cartItem)
+        public async Task AddCartItem(int userId, int kitId, int quantity)
         {
-            await _context.CartItems.AddAsync(cartItem);
+            var kit = await _context.KitStems.FindAsync(kitId);
+
+            if (kit == null)
+            {
+                throw new InvalidOperationException("Kit not found.");
+            }
+
+            if (quantity > kit.quantity)
+            {
+                throw new InvalidOperationException("Quantity exceeds available stock.");
+            }
+
+            var existingCartItem = await _context.CartItems
+                .FirstOrDefaultAsync(ci => ci.UserId == userId && ci.KitId == kitId);
+
+            if (existingCartItem != null)
+            {
+                int newQuantity = (int)(existingCartItem.Quantity + quantity);
+                if (newQuantity > kit.quantity)
+                {
+                    throw new InvalidOperationException("Total quantity exceeds available stock.");
+                }
+                existingCartItem.Quantity = newQuantity;
+            }
+            else
+            {
+                var cartItem = new CartItem
+                {
+                    UserId = userId,
+                    KitId = kitId,
+                    Quantity = quantity
+                };
+
+                await _context.CartItems.AddAsync(cartItem);
+            }
+
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveAsync(int kitId)
-        {
-            var cartItem = await _context.CartItems.FindAsync(kitId);
-            if (cartItem != null)
-            {
-                _context.CartItems.Remove(cartItem);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<List<CartItem>> GetAllAsync()
-        {
-            return await _context.CartItems.ToListAsync();
-        }
-
-        public async Task<List<CartItem>> GetAllIncludingKitAsync(int page, int pageSize, int kitId)
-        {
-            var query = _context.CartItems
-                .Include(ci => ci.Kit) // Include the related Kit entity
-                .Where(ci => ci.KitId == kitId); // Filter by kitId
-
-            return await query.Skip((page - 1) * pageSize)
-                              .Take(pageSize)
-                              .ToListAsync();
-        }
-
-
-
-
-
-
-        public async Task<CartItem?> GetByIdAsync(int kitId)
+        public async Task<List<CartItem>> GetCartItemsByUserId(int userId)
         {
             return await _context.CartItems
-                .Include(ci => ci.Kit) // Include the related Kit entity
-                .FirstOrDefaultAsync(ci => ci.KitId == kitId);
+                .Where(ci => ci.UserId == userId)
+                .Include(ci => ci.Kit) 
+                .ToListAsync();
         }
 
         public async Task UpdateAsync(CartItem cartItem)
         {
-            _context.CartItems.Update(cartItem);
+            _context.Entry(cartItem).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

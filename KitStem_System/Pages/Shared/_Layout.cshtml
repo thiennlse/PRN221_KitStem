@@ -1,54 +1,136 @@
-﻿<!DOCTYPE html>
+﻿
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - KitStem_System</title>
+    <title>@ViewData["Title"] - ProjectGroup</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/KitStem_System.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ProjectGroup.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .content-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer {
+            height: 4rem;
+            margin-top: auto;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding-top: 1rem;
+        }
+
+        .navbar {
+            background-color: #007bff;
+        }
+
+            .navbar .navbar-brand,
+            .navbar .nav-link {
+                color: white !important;
+            }
+
+                .navbar .nav-link:hover {
+                    color: #d1ecf1 !important;
+                }
+
+            .navbar .active {
+                font-weight: bold;
+                color: #d1ecf1 !important;
+            }
+
+        .container {
+            max-width: 960px;
+        }
+
+        main {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">KitStem_System</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/LabPage/Index">Lab</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/UserPage/Index">UserPage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/KitOrderPage/Index">KitOrder</a>
-                        </li>
-                    </ul>
+    <div class="content-wrapper">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+                <div class="container">
+                    <a class="navbar-brand fw-bold" asp-area="" asp-page="/KitShopPage/ViewKitShop">KitStem_System</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            @{
+                                var role = Context.Session.GetInt32("roleid") ?? 0;
+                            }
+                            @if (role == 2)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/UserPage/Index">UserPage</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/KitPage/Index">KitPage</a>
+                                </li>
+                            }
+                            else if (role == 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/MyKit/MyKit">MyKit</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/OrderPage/OrderHistory">Order History</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/KitShopPage/ViewKitShop">KitShop</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/CartShopPage/CartShop"><i class="fas fa-shopping-cart"></i></a>
+                                </li>
+
+                            }
+                            else if (role == 0)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/Index">Login</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
+            </nav>
+        </header>
+
+        <div class="container">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                &copy; 2024 - KitStem_System - <a asp-area="" asp-page="/Privacy" class="text-decoration-none text-white">Privacy</a>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </footer>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - KitStem_System - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIqah5pvlfIXSL4nF2H/h4p6OV6zmc1j0MPxKK5HEq3l5Zd/3He" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+

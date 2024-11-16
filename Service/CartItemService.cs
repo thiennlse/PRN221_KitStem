@@ -1,65 +1,50 @@
 ﻿using BusinessObject.Models;
-using Repository.Interface;
+using BusinessObject.RequestModel;
+using Reposiory;
+using Reposiory.Interface;
 using Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Service
 {
     public class CartItemService : ICartItemService
     {
-        private readonly ICartItemRepository _repository;
+        private readonly ICartItemRepository _cartItemRepository;
 
-        public CartItemService(ICartItemRepository repository)
+        public CartItemService(ICartItemRepository cartItemRepository)
         {
-            _repository = repository;
+            _cartItemRepository = cartItemRepository;
         }
 
-        /// <summary>
-        /// Adds a new CartItem to the repository.
-        /// </summary>
-        public async Task Add(CartItem cartItem)
+        public Task AddCartItem(int userId, int kitId, int quantity)
         {
-            await _repository.AddAsync(cartItem);
+            return _cartItemRepository.AddCartItem(userId, kitId, quantity);
         }
 
-        /// <summary>
-        /// Deletes a CartItem by its ID.
-        /// </summary>
-        public async Task Delete(int kitId)
+        public Task<List<CartItem>> GetCartItemsByUserId(int userId)
         {
-            await _repository.RemoveAsync(kitId);
+            return _cartItemRepository.GetCartItemsByUserId(userId);
         }
 
-        /// <summary>
-        /// Retrieves a paginated list of CartItems with optional search functionality.
-        /// </summary>
-        public async Task<List<CartItem>> GetAllIncludingKitAsync(int page, int pageSize, int kitId)
+        public Task UpdateAsync(CartItem cart)
         {
-            // Call the repository method to fetch cart items including the kit based on the given parameters
-            return await _repository.GetAllIncludingKitAsync(page, pageSize,kitId);
+            return _cartItemRepository.UpdateAsync(cart);
+        }
+
+        public async Task<CartItem> GetById(int id)
+        {
+            return await _cartItemRepository.GetById(id);
+        }
+
+        public async Task DeleteById(int id)
+        {
+            await _cartItemRepository.Remove(id);
         }
 
 
-
-        /// <summary>
-        /// Retrieves a specific CartItem by its ID.
-        /// </summary>
-        public async Task<CartItem> GetById(int kitId)
-        {
-            return await _repository.GetByIdAsync(kitId);
-        }
-
-        /// <summary>
-        /// Updates an existing CartItem.
-        /// </summary>
-        public async Task Update(int kitId, CartItem cartItem)
-        {
-           
-
-            await _repository.UpdateAsync(cartItem);
-        }
     }
 }
