@@ -1,6 +1,7 @@
 using BusinessObject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Service;
 using Service.Interface;
 
 namespace KitStem_System.Pages.MyKit
@@ -20,49 +21,51 @@ namespace KitStem_System.Pages.MyKit
 
         public Lab Lab { get; set; }
         public UserLab UserLab { get; set; }
-        public bool CanHelp { get; set; } = false;
+        public List<Step> Steps { get; set; }
 
-        public async Task OnGetAsync(int labId)
+        public async Task<IActionResult> OnGetAsync(int labId)
         {
-            Lab = _labService.GetLabWithSteps(labId);
-            if (Lab == null) return;
 
-            int userId = 1;
+            var userId = HttpContext.Session.GetInt32("userid") ?? 0;
+
+            Lab = _labService.GetLabWithSteps(labId);
+
+            if (Lab == null)
+            {
+                return RedirectToPage("/Error");
+            }
             UserLab = await _userLabService.GetByLabId(labId, userId);
 
-            if (UserLab != null)
-            {
-                CanHelp = UserLab.HelpRemaining > 0;
-            }
+            Steps = Lab.Steps?
+                     .ToList() ?? new List<Step>();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostHelpAsync(int stepId, int labId)
         {
-            int userId = 1;
-            UserLab = await _userLabService.GetByLabId(labId, userId);
+            var userId = HttpContext.Session.GetInt32("userid") ?? 0;
 
-            if (UserLab == null || UserLab.HelpRemaining <= 0)
+            var userLab = await _userLabService.GetByLabId(labId, userId);
+            if (userLab == null || userLab.HelpRemaining <= 0)
             {
-                return RedirectToPage("/MyKit/MyLab", new { labId = labId });
-            }
-
-            var existingHelp = await _helpHistoryService.GetHelpHistoryAsync(UserLab.Id, stepId);
-            if (existingHelp != null)
-            {
-                return RedirectToPage("/MyKit/MyLab", new { labId = labId });
+                TempData["Error"] = "You have no remaining help requests.";
+                return RedirectToPage();
             }
 
             var helpHistory = new HelpHistory
             {
-                UserLabId = UserLab.Id,
-                StepId = stepId
+                UserLabId = userLab.Id,
+                StepId = stepId,
             };
+
             await _helpHistoryService.CreateHelpHistoryAsync(helpHistory);
 
-            UserLab.HelpRemaining--;
-            await _userLabService.UpdateUserLabAsync(UserLab);
+            userLab.HelpRemaining -= 1;
+            await _userLabService.UpdateUserLabAsync(userLab);
 
-            return RedirectToPage("/MyKit/MyLab", new { labId = labId });
+            TempData["Success"] = "Help request has been submitted successfully.";
+            return RedirectToPage(new { labId = labId });
         }
+
     }
 }

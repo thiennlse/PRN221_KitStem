@@ -30,7 +30,7 @@ namespace Service
 
         public async Task<UserLab> GetByLabId(int labId, int userId)
         {
-            return await _repository.GetByLabId(labId, userId) ;
+            return await _repository.GetByLabId(labId, userId);
         }
 
         public Task<bool> IsUserEnrolledInLabAsync(int userId, int id)

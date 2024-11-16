@@ -29,16 +29,16 @@ namespace KitStem_System.Pages.MyKit
             KitId = kitId;  
             Labs = await _labService.GetByKitId(kitId);
 
-            int userId = 1;
+            var userId = HttpContext.Session.GetInt32("userid");
             foreach (var lab in Labs)
             {
-                LabEnrollmentStatuses[lab.Id] = await _userLabService.IsUserEnrolledInLabAsync(userId, lab.Id);
+                LabEnrollmentStatuses[lab.Id] = await _userLabService.IsUserEnrolledInLabAsync((int)userId, lab.Id);
             }
         }
 
         public async Task<IActionResult> OnPostEnrollAsync(int labId, int kitId)
         {
-            int userId = 1; 
+            int userId = (int)HttpContext.Session.GetInt32("userid"); 
 
             var success = await _userLabService.EnrollUserInLabAsync(userId, labId);
 

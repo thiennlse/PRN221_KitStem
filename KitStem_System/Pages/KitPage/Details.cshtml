@@ -92,8 +92,6 @@
                     <td>@(lab.Status == 1 ? "Active" : "UnActive")</td>
                     <td>@lab.MaxHelp</td>
                     <td>
-                        <a href="@Url.Page("./EditLab", new { id = lab.Id })" class="btn btn-primary">Update</a> |
-                        <a href="@Url.Page("./DeleteLab", new { id = lab.Id })" class="btn btn-danger">Delete</a> |
                         <a href="@Url.Page("./LabDetail", new { id = lab.Id })" class="btn btn-info">Lab Detail</a>
                     </td>
                 </tr>

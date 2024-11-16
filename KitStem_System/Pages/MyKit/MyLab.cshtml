@@ -4,54 +4,82 @@
     ViewData["Title"] = "Lab Information";
 }
 
-<h1>Lab Information</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Lab Details</h1>
 
-@if (Model.Lab == null)
-{
-    <p>Lab not found.</p>
-}
-else
-{
-    <h3>@Model.Lab.Description</h3>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <p><strong>Description:</strong> @Model.Lab.Description</p>
+            <p><strong>DeadLine:</strong> @(Model.UserLab.Deadline?.ToString("MM/dd/yyyy") ?? "N/A")</p>
+            <p><strong>Help Remaining:</strong> @Model.UserLab.HelpRemaining</p>
+        </div>
+    </div>
 
-    <h4>Steps</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Step Description</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var step in Model.Lab.Steps)
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Steps in this Lab</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Steps != null && Model.Steps.Any())
             {
-                <tr>
-                    <td>
-                        @if (Model.UserLab != null && Model.UserLab.HelpHistories != null && Model.UserLab.HelpHistories.Any(h => h.StepId == step.Id))
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Step</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var step in Model.Steps)
                         {
-                            <p>@step.Description</p>
+                            <tr>
+                                <td>@step.ThisStep</td>
+                                <td>
+                                    @if (step.HelpHistories.Any(h => h.UserLabId == Model.UserLab.Id))
+                                    {
+                                        @if (!string.IsNullOrEmpty(step.Description))
+                                        {
+                                            <a href="@step.Description" target="_blank">Download File</a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No description available</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No description available</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (step.HelpHistories.Any(h => h.UserLabId == Model.UserLab.Id))
+                                    {
+                                        <span class="text-success">You have already requested help for this step.</span>
+                                    }
+                                    else
+                                    {
+                                        @if (Model.UserLab.HelpRemaining > 0)
+                                        {
+                                            <form method="post" asp-page-handler="Help" asp-route-stepId="@step.Id" asp-route-labId="@Model.Lab.Id">
+                                                <button type="submit" class="btn btn-primary">Help</button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">No remaining help requests</span>
+                                        }
+                                    }
+                                </td>
+                            </tr>
                         }
-                        else
-                        {
-                            <p>Not available</p>
-                        }
-                    </td>
-                    <td>
-                        @if (Model.UserLab != null && Model.CanHelp && (Model.UserLab.HelpHistories?.Any(h => h.StepId == step.Id) != true))
-                        {
-                            <form method="post" asp-page-handler="Help">
-                                <input type="hidden" name="stepId" value="@step.Id" />
-                                <input type="hidden" name="userLabId" value="@Model.UserLab.Id" />
-                                <button type="submit" class="btn btn-primary">Help</button>
-                            </form>
-                        }
-                        else
-                        {
-                            <span>Already helped or no help remaining</span>
-                        }
-                    </td>
-                </tr>
+                    </tbody>
+                </table>
             }
-        </tbody>
-    </table>
-}
+            else
+            {
+                <p class="text-muted text-center">No steps available for this lab.</p>
+            }
+        </div>
+    </div>
+</div>

@@ -43,7 +43,7 @@ namespace Service
         public Payment CreatePayPalPayment(decimal total, string successUrl, string cancelUrl)
         {
             var apiContext = GetAPIContext();
-            decimal newTotal = Math.Round(total, 2); 
+            decimal newTotal = Math.Round(total, 2);
             Console.WriteLine($"Converted total: {newTotal}");
 
             var transactionList = new List<Transaction>
@@ -63,7 +63,7 @@ namespace Service
             var payment = new Payment
             {
                 intent = "sale",
-                payer = new Payer { payment_method = "paypal" },
+                payer = new Payer { payment_method = "paypal" },    
                 transactions = transactionList,
                 redirect_urls = new RedirectUrls
                 {
@@ -79,17 +79,17 @@ namespace Service
                 var approvalUrl = createdPayment.links
                     .FirstOrDefault(link => link.rel == "approval_url")?.href;
 
-                return createdPayment;
+                return createdPayment;  
             }
 
 
             catch (PayPalException ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error while creating PayPal payment", ex);
+                throw new Exception(ex.Message);
             }
         }
- 
+
         public Task<BusinessObject.Models.Order> CreateOrder(List<CartItem> cartItems)
         {
             return _repository.CreateOrder(cartItems);

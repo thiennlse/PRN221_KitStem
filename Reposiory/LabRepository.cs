@@ -84,6 +84,7 @@ namespace Reposiory
         {
             return _context.Labs
                 .Include(l => l.Steps)
+                .ThenInclude(s => s.HelpHistories)
                 .FirstOrDefault(l => l.Id == labId);
         }
     }

@@ -46,7 +46,7 @@ namespace KitStem_System.Pages.CartShopPage
                 int newQuantity = (int)(item.Quantity + amount);
                 if (newQuantity < 1)
                 {
-                    newQuantity = 1; 
+                    newQuantity = 1;
                 }
                 else if (newQuantity > newkit.quantity)
                 {
@@ -69,7 +69,8 @@ namespace KitStem_System.Pages.CartShopPage
 
         public async Task<IActionResult> OnPostCheckoutAsync()
         {
-            Cart = await _cartItemService.GetCartItemsByUserId(1);
+            var userId = HttpContext.Session.GetInt32("userid");
+            Cart = await _cartItemService.GetCartItemsByUserId((int )userId);
 
             TotalPrice = (decimal)Cart.Sum(item => item.Kit.price * item.Quantity);
 

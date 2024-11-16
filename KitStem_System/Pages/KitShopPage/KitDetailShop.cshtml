@@ -2,10 +2,12 @@
 @model KitStem_System.Pages.KitShopPage.KitDetailShopModel
 @{
     var role = HttpContext.Session.GetInt32("roleid") ?? 0;
+    var Error = HttpContext.Session.GetString("Error");
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kit Details - @Model.Kit?.Name</title>

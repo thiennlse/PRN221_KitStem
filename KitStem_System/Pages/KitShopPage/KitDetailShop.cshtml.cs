@@ -29,16 +29,24 @@ namespace KitStem_System.Pages.KitShopPage
 
         public async Task<IActionResult> OnPostAddToCartAsync(int kitId, int quantity)
         {
-            var userId = 1; 
+            var userId = HttpContext.Session.GetInt32("userid");
+            var kit = await _kitService.GetById(kitId);
+            if (quantity > kit.quantity)
+            {
+                HttpContext.Session.SetString("Error", "Not enough quantity");
+                return Page();
+            }
+            else
+            {
+                await _cartItemService.AddCartItem((int)userId, kitId, quantity);
 
-            await _cartItemService.AddCartItem(userId, kitId, quantity);
-
-            return RedirectToPage("/KitShopPage/KitDetailShop", new { id = kitId });
+                return RedirectToPage("/KitShopPage/KitDetailShop", new { id = kitId });
+            }
         }
 
         public async Task<IActionResult> OnPostBuyNowAsync(int kitId, int quantity)
         {
-            var userId = 1; 
+            var userId = 1;
 
             await _cartItemService.AddCartItem(userId, kitId, quantity);
 
